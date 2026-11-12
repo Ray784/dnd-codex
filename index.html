@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>D&D 5e Character Forge — Species & Class Synergy</title>
+  <link rel="icon" type="image/svg+xml" href="static/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="static/styles.css?v=33" />
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand topbar-forge-only">
+        <span class="brand-mark">⚔</span>
+        <div>
+          <h1>D&amp;D 5e Character Forge</h1>
+          <p class="subtitle">Species × Class Synergy, Niche Mechanics &amp; Roleplay Matrix</p>
+        </div>
+      </div>
+      <div class="topbar-builder-left topbar-builder-only" hidden>
+        <button id="btn-close-builder" class="btn btn-secondary" type="button">← Back to Forge</button>
+        <div class="builder-title-wrap">
+          <span id="builder-title" class="builder-title">New Character</span>
+          <span id="builder-progress" class="builder-progress">0 / 5 Steps</span>
+        </div>
+      </div>
+      <div class="level-control" role="group" aria-label="Character Level">
+        <span class="level-kicker">LEVEL</span>
+        <button id="lvl-dec" class="lvl-step" type="button" aria-label="Decrease level">−</button>
+        <strong id="level-val" class="level-num">1</strong>
+        <button id="lvl-inc" class="lvl-step" type="button" aria-label="Increase level">+</button>
+        <div class="level-track-wrap">
+          <input id="level-slider" type="range" min="1" max="20" value="1" aria-label="Level slider" />
+        </div>
+        <span id="pb-val" class="level-pb" data-dnd-tip="Proficiency Bonus +2 at Level 1 — PHB scale: +2 at Lv 1–4, +3 at Lv 5–8, +4 at Lv 9–12, +5 at Lv 13–16, +6 at Lv 17–20" title="Proficiency Bonus +2 at Level 1 — PHB scale: +2 at Lv 1–4, +3 at Lv 5–8, +4 at Lv 9–12, +5 at Lv 13–16, +6 at Lv 17–20">PB +2</span>
+      </div>
+      <div class="topbar-actions topbar-forge-only">
+        <button id="btn-randomize" class="btn btn-secondary" type="button">🎲 Randomize Combo</button>
+        <button id="btn-open-builder" class="btn btn-primary" type="button">📜 Build Character Sheet →</button>
+      </div>
+      <div class="topbar-actions topbar-builder-only" hidden>
+        <button id="btn-copy-summary" class="btn btn-secondary" type="button">Copy Build Sheet</button>
+        <button id="btn-print-sheet" class="btn btn-secondary" type="button">🖨 Print Sheet</button>
+        <button id="btn-export-pdf" class="btn btn-primary" type="button">📄 Export PDF</button>
+      </div>
+    </header>
+
+    <main id="workspace" class="workspace">
+      <section id="species-panel" class="selector-panel" aria-label="Species Selection">
+        <div class="selector-group">
+          <div class="selector-header">
+            <div class="selector-title">
+              <h2>Species / Race</h2>
+            </div>
+            <span id="species-count" class="badge"></span>
+          </div>
+          <p class="selector-hint" data-role-hint="species"></p>
+          <div id="species-grid" class="card-grid" role="listbox" aria-label="Species"></div>
+          <div class="sub-label">Sub-Race</div>
+          <div id="subrace-strip" class="sub-strip" role="listbox" aria-label="Sub-Race"></div>
+        </div>
+      </section>
+
+      <section id="stage-panel" class="stage-panel" aria-label="Character Stage">
+        <div id="character-stage" class="character-stage"></div>
+      </section>
+
+      <section id="class-panel" class="selector-panel" aria-label="Class Selection">
+        <div class="selector-group">
+          <div class="selector-header">
+            <div class="selector-title">
+              <h2>Class</h2>
+            </div>
+            <span id="class-count" class="badge"></span>
+          </div>
+          <p class="selector-hint" data-role-hint="class"></p>
+          <div id="class-grid" class="card-grid" role="listbox" aria-label="Class"></div>
+          <div class="sub-label">Sub-Class</div>
+          <div id="subclass-strip" class="sub-strip" role="listbox" aria-label="Sub-Class"></div>
+        </div>
+      </section>
+
+      <section id="upgrades-panel" class="upgrades-panel" aria-label="Better Combinations and Upgrades"></section>
+
+      <section class="detail-panel" aria-live="polite">
+        <div id="combo-hero" class="combo-hero"></div>
+        <div id="identity-grid" class="identity-grid" aria-label="Selection Definitions"></div>
+
+        <div class="tabs" role="tablist">
+          <button class="tab active" data-tab="synergy" role="tab" aria-selected="true">Synergy &amp; Niche</button>
+          <button class="tab" data-tab="actions" role="tab" aria-selected="false">⚔ Actions &amp; Dice Rolls</button>
+          <button class="tab" data-tab="skills" role="tab" aria-selected="false">Skills &amp; Proficiencies</button>
+          <button class="tab" data-tab="roleplay" role="tab" aria-selected="false">Personality, Ideals, Bonds &amp; Flaws++</button>
+          <button class="tab" data-tab="playbook" role="tab" aria-selected="false">🎯 Playbook</button>
+          <button class="tab" data-tab="appendix" role="tab" aria-selected="false">📖 Appendix</button>
+        </div>
+
+        <div id="tab-synergy" class="tab-content active"></div>
+        <div id="tab-actions" class="tab-content"></div>
+        <div id="tab-skills" class="tab-content"></div>
+        <div id="tab-roleplay" class="tab-content"></div>
+        <div id="tab-playbook" class="tab-content"></div>
+        <div id="tab-appendix" class="tab-content"></div>
+      </section>
+    </main>
+
+    <main id="sheet-builder-view" class="sheet-builder-view" aria-label="2024 Character Sheet Builder" hidden>
+      <div id="builder-gate" class="builder-gate" role="alert" hidden></div>
+      <div class="builder-layout">
+        <section id="tab-sheet" class="builder-steps" aria-label="Builder Steps"></section>
+        <aside class="builder-side">
+          <section id="builder-preview" class="builder-preview" aria-label="2024 Sheet Preview"></section>
+        </aside>
+      </div>
+      <section id="tab-dice" class="builder-dice-dock" aria-label="Dice Roller"></section>
+    </main>
+  </div>
+
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <div id="roll-tray" class="roll-tray" aria-live="polite"></div>
+  <section id="print-sheet-view" class="print-sheet-view" aria-hidden="true"></section>
+  <script src="js/data.js?v=33"></script>
+  <script src="js/synergy.js?v=33"></script>
+  <script src="js/dice3d.js?v=33"></script>
+  <script src="js/playbook.js?v=33"></script>
+  <script src="js/portraits-lq.js?v=33"></script>
+  <script src="js/avatar.js?v=33"></script>
+  <script src="js/app.js?v=33"></script>
+</body>
+</html>
