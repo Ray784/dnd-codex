@@ -7,3 +7,4 @@ server.log
 *.bak
 .tmp_*
 .DS_Store
+*.bundle

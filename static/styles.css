@@ -1154,14 +1154,6 @@ body {
   min-height: 0;
 }
 
-.stage-silhouette {
-  height: 100%;
-  width: auto;
-  max-width: 100%;
-  filter: drop-shadow(0 8px 18px rgba(0, 0, 0, 0.6));
-  transition: filter 220ms var(--ease-out);
-}
-
 .emblem {
   position: absolute;
   bottom: 14px;
@@ -1988,8 +1980,8 @@ body {
   height: 100%;
   object-fit: cover;
   object-position: center 14%;
-  filter: blur(9px) saturate(1.08);
-  transform: scale(1.06);
+  filter: blur(1.5px) saturate(1.03);
+  transform: scale(1.012);
   pointer-events: none;
   z-index: 0;
 }
@@ -2003,9 +1995,9 @@ body {
   object-position: center 13%;
   display: block;
   opacity: 0;
-  transform: scale(1.022);
+  transform: scale(1.014);
   will-change: opacity, transform;
-  transition: opacity 240ms cubic-bezier(0.22, 1, 0.36, 1), transform 300ms cubic-bezier(0.22, 1, 0.36, 1), filter 220ms ease;
+  transition: opacity 135ms cubic-bezier(0.22, 1, 0.36, 1), transform 170ms cubic-bezier(0.22, 1, 0.36, 1), filter 135ms ease;
 }
 .codex-img.is-back {
   z-index: 1;
@@ -2019,14 +2011,13 @@ body {
   opacity: 1;
   transform: scale(1);
 }
+.codex-frame.is-loading-lq .codex-img {
+  opacity: 0;
+  transition: opacity 85ms ease-out;
+}
 .codex-corner { z-index: 4; }
 .codex-frame::after { z-index: 3; }
 .codex-frame:hover .codex-img.is-ready.is-front { transform: scale(1.025); filter: saturate(1.06); }
-.codex-frame.is-fallback .codex-img { display: none; }
-.codex-fallback { position: absolute; inset: 0; display: none; align-items: center; justify-content: center; }
-.codex-fallback[hidden] { display: none !important; }
-.codex-frame.is-fallback .codex-fallback { display: flex; }
-.codex-fallback .stage-silhouette { height: 100%; width: auto; }
 .codex-corner {
   position: absolute;
   width: 22px;

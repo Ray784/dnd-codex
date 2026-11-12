@@ -1004,27 +1004,6 @@
     }
   }
 
-  const SILHOUETTE_SVG = `
-    <svg class="stage-silhouette" viewBox="0 0 200 240" aria-hidden="true">
-      <defs>
-        <radialGradient id="auraGrad" cx="50%" cy="45%" r="55%">
-          <stop offset="0%" stop-color="var(--aura)" stop-opacity="0.55" />
-          <stop offset="100%" stop-color="var(--aura)" stop-opacity="0" />
-        </radialGradient>
-        <linearGradient id="cloakGrad" x1="0" y1="0" x2="0" y2="1">
-          <stop offset="0%" stop-color="#2a3142" />
-          <stop offset="100%" stop-color="#0d1017" />
-        </linearGradient>
-      </defs>
-      <circle cx="100" cy="112" r="104" fill="url(#auraGrad)" />
-      <ellipse cx="100" cy="232" rx="70" ry="7" fill="var(--aura)" opacity="0.28" />
-      <path d="M100 16 C70 16 55 42 55 72 C55 93 63 106 73 114 L58 131 C38 140 27 162 24 200 L22 234 L178 234 L176 200 C173 162 162 140 142 131 L127 114 C137 106 145 93 145 72 C145 42 130 16 100 16 Z" fill="url(#cloakGrad)" stroke="var(--aura)" stroke-opacity="0.55" stroke-width="1.5" />
-      <path d="M100 34 C82 34 72 52 72 76 C72 96 84 110 100 110 C116 110 128 96 128 76 C128 52 118 34 100 34 Z" fill="#06070a" />
-      <ellipse cx="89" cy="80" rx="5" ry="2.4" fill="var(--aura)" />
-      <ellipse cx="111" cy="80" rx="5" ry="2.4" fill="var(--aura)" />
-      <path d="M100 118 L100 234" stroke="var(--aura)" stroke-opacity="0.22" stroke-width="1" />
-    </svg>`;
-
   function barRowHtml(key, label) {
     return `
       <div class="bar-row" data-bar="${key}">
@@ -1045,7 +1024,7 @@
           ${RATINGS.map(starItemHtml).join("")}
         </div>
         <div class="stage-figure">
-          <div class="stage-portrait-host" data-stage-portrait>${SILHOUETTE_SVG}</div>
+          <div class="stage-portrait-host" data-stage-portrait></div>
         </div>
         <div class="stage-status-row">
           <p class="stage-epithet" data-stage-epithet></p>
@@ -1085,7 +1064,7 @@
     return "";
   }
 
-  // Paints the AI portrait frame, swapping img src in place, with SVG as the last resort.
+  // Paints the WebP portrait frame, swapping img src in place over a lossy preview.
   function renderStagePortrait(host, shown, isPreview) {
     const av = window.FORGE_AVATAR;
     if (!host || !av) return;
@@ -1094,9 +1073,7 @@
       const frame = host.querySelector(".codex-frame");
       if (frame && typeof av.updatePortraitFrame === "function" && av.updatePortraitFrame(frame, shown.sp, shown.sr, shown.cl, shown.sc, opts)) return;
       host.innerHTML = av.renderPortraitHtml(shown.sp, shown.sr, shown.cl, shown.sc, opts);
-      return;
     }
-    host.innerHTML = av.renderPortraitSvg(shown.sp, shown.sr, shown.cl, shown.sc, opts);
   }
 
   function updateStage(cur, prev) {
@@ -3823,12 +3800,12 @@
     const onUpEnter = (e) => {
       const card = e.target.closest("[data-apply-sp]");
       if (!card) return;
-      scheduleUpPreview(buildFromApplyCard(card), 38);
+      scheduleUpPreview(buildFromApplyCard(card), 12);
     };
     el.upgrades.addEventListener("click", () => { clearTimeout(upHoverTimer); });
     el.upgrades.addEventListener("mouseover", onUpEnter);
     el.upgrades.addEventListener("focusin", onUpEnter);
-    el.upgrades.addEventListener("mouseleave", () => scheduleUpPreview(null, 55));
+    el.upgrades.addEventListener("mouseleave", () => scheduleUpPreview(null, 28));
     el.upgrades.addEventListener("focusout", (e) => {
       if (!el.upgrades.contains(e.relatedTarget)) scheduleUpPreview(null, 0);
     });
@@ -4181,7 +4158,7 @@
       if (e.type === "focusin" && pointerDown) return;
       const build = buildFromTarget(e.target);
       if (!build) return;
-      scheduleHoverPreview(build, e.type === "focusin" ? 0 : 38);
+      scheduleHoverPreview(build, e.type === "focusin" ? 0 : 12);
     };
     container.addEventListener("mousedown", () => {
       pointerDown = true;
@@ -4196,7 +4173,7 @@
     });
     container.addEventListener("mouseover", onEnter);
     container.addEventListener("focusin", onEnter);
-    container.addEventListener("mouseleave", () => scheduleHoverPreview(null, 55));
+    container.addEventListener("mouseleave", () => scheduleHoverPreview(null, 28));
     container.addEventListener("focusout", (e) => {
       if (!container.contains(e.relatedTarget)) scheduleHoverPreview(null, 0);
     });

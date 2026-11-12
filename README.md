@@ -102,9 +102,8 @@ Then open `http://localhost:8080`.
 │   ├── synergy.js      # Species × Class synergy & rating engine
 │   ├── dice3d.js       # 3D polyhedral dice meshes & face-landing poses
 │   ├── playbook.js     # Turn-by-turn maximizer & 3-page PDF 1.4 generator
-│   ├── portraits-lq.js # Inline LQIP preload thumbnails
-│   ├── avatar.js       # Double-buffered portrait crossfade loader
+│   ├── avatar.js       # Progressive double-buffered WebP portrait loader
 │   └── app.js          # UI state, sheet builder, CSPRNG dice physics & PDF print/export
 └── images/
-    └── portraits/      # 12 class folders × 12 species (.webp + .lq.webp)
+    └── portraits/      # 12 class folders × 12 species: 640x857 .webp + 160x214 lossy .lq.webp progressive previews
 ```
