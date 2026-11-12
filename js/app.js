@@ -4253,9 +4253,48 @@
     return { show, hide, el: tip, get active() { return active; } };
   }
 
+  const HANDBOOK_PDF = "docs/player-handbook.pdf";
+  const HANDBOOK_FALLBACK = "https://www.dndbeyond.com/sources/dnd/basic-rules-2014";
+  const HANDBOOK_FALLBACK_TIP = "Open D&D 5e Rules Reference in a new tab";
+
+  // Probe the local PDF and swap every handbook link to the public rules on miss.
+  function applyHandbookFallback(links) {
+    links.forEach((a) => {
+      a.setAttribute("href", HANDBOOK_FALLBACK);
+      a.setAttribute("data-dnd-tip", HANDBOOK_FALLBACK_TIP);
+      if (a.hasAttribute("title")) a.setAttribute("title", HANDBOOK_FALLBACK_TIP);
+      if (a.dataset.dndTitle) a.dataset.dndTitle = HANDBOOK_FALLBACK_TIP;
+    });
+  }
+
+  function initHandbookLinks(fetchImpl) {
+    const links = [...document.querySelectorAll("[data-handbook-link]")];
+    const doFetch = fetchImpl || (typeof fetch === "function" ? fetch : null);
+    if (!links.length) return Promise.resolve("none");
+    if (!doFetch) {
+      applyHandbookFallback(links);
+      return Promise.resolve("fallback");
+    }
+    return Promise.resolve()
+      .then(() => doFetch(HANDBOOK_PDF, { method: "HEAD" }))
+      .then((r) => {
+        if (r && r.ok) {
+          links.forEach((a) => a.setAttribute("href", HANDBOOK_PDF));
+          return "local";
+        }
+        applyHandbookFallback(links);
+        return "fallback";
+      })
+      .catch(() => {
+        applyHandbookFallback(links);
+        return "fallback";
+      });
+  }
+
   initStage();
   renderAll();
   const dndTooltip = initDndTooltip();
+  initHandbookLinks();
 
   // Read-only hook for headless verification of stat labeling helpers.
   window.FORGE_UI = {
@@ -4267,6 +4306,7 @@
     contextualActions, localCombinations, combinationsPlaybookSafe, levelPct, sheetProfile, builderStatus, openBuilder, closeBuilder,
     requestExport, validPdfBytes, scrubPayload, activateTab, summaryText, autoAssign, equipState, rpSuggestions,
     scoreRollSet, syncRolledScores, nextOpenSlot, armRollSlot, clearRollSlot, pickSwapSlot, feedRollSlot, migrateLegacyRolls, sanitizeStored, triggerDieRoll, renderDiceTab,
-    prepareGrayscalePortrait, exportPdfBytesAsync, downloadPdf, printSheet, localPdfBytes, printGray, portraitCrop, portraitGrayCache
+    prepareGrayscalePortrait, exportPdfBytesAsync, downloadPdf, printSheet, localPdfBytes, printGray, portraitCrop, portraitGrayCache,
+    initHandbookLinks, applyHandbookFallback
   };
 })();

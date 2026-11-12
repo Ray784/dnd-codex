@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="static/styles.css?v=33" />
+  <link rel="stylesheet" href="static/styles.css?v=34" />
 </head>
 <body>
   <div class="app-shell">
@@ -38,10 +38,12 @@
         <span id="pb-val" class="level-pb" data-dnd-tip="Proficiency Bonus +2 at Level 1 — PHB scale: +2 at Lv 1–4, +3 at Lv 5–8, +4 at Lv 9–12, +5 at Lv 13–16, +6 at Lv 17–20" title="Proficiency Bonus +2 at Level 1 — PHB scale: +2 at Lv 1–4, +3 at Lv 5–8, +4 at Lv 9–12, +5 at Lv 13–16, +6 at Lv 17–20">PB +2</span>
       </div>
       <div class="topbar-actions topbar-forge-only">
+        <a id="btn-handbook" class="btn btn-secondary nav-handbook" data-handbook-link href="docs/player-handbook.pdf" target="_blank" rel="noopener noreferrer" data-dnd-tip="Open Player's Handbook PDF in a new tab" title="Open Player's Handbook PDF in a new tab">📖 Handbook ↗</a>
         <button id="btn-randomize" class="btn btn-secondary" type="button">🎲 Randomize Combo</button>
         <button id="btn-open-builder" class="btn btn-primary" type="button">📜 Build Character Sheet →</button>
       </div>
       <div class="topbar-actions topbar-builder-only" hidden>
+        <a class="btn btn-secondary nav-handbook" data-handbook-link href="docs/player-handbook.pdf" target="_blank" rel="noopener noreferrer" data-dnd-tip="Open Player's Handbook PDF in a new tab" title="Open Player's Handbook PDF in a new tab">📖 Handbook ↗</a>
         <button id="btn-copy-summary" class="btn btn-secondary" type="button">Copy Build Sheet</button>
         <button id="btn-print-sheet" class="btn btn-secondary" type="button">🖨 Print Sheet</button>
         <button id="btn-export-pdf" class="btn btn-primary" type="button">📄 Export PDF</button>
@@ -122,12 +124,12 @@
   <div id="toast" class="toast" role="status" aria-live="polite"></div>
   <div id="roll-tray" class="roll-tray" aria-live="polite"></div>
   <section id="print-sheet-view" class="print-sheet-view" aria-hidden="true"></section>
-  <script src="js/data.js?v=33"></script>
-  <script src="js/synergy.js?v=33"></script>
-  <script src="js/dice3d.js?v=33"></script>
-  <script src="js/playbook.js?v=33"></script>
-  <script src="js/portraits-lq.js?v=33"></script>
-  <script src="js/avatar.js?v=33"></script>
-  <script src="js/app.js?v=33"></script>
+  <script src="js/data.js?v=34"></script>
+  <script src="js/synergy.js?v=34"></script>
+  <script src="js/dice3d.js?v=34"></script>
+  <script src="js/playbook.js?v=34"></script>
+  <script src="js/portraits-lq.js?v=34"></script>
+  <script src="js/avatar.js?v=34"></script>
+  <script src="js/app.js?v=34"></script>
 </body>
 </html>
