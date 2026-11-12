@@ -1,0 +1,9 @@
+# Local reference docs (copyrighted / large PDFs)
+docs/
+
+# Local dev server logs & editor/scratch files
+server.log
+*.log
+*.bak
+.tmp_*
+.DS_Store
